@@ -1,0 +1,20 @@
+create table users
+(
+	id bigserial not null
+		constraint users_pk
+			primary key,
+	username varchar(20) not null,
+	password varchar(100) not null
+);
+
+
+create table shots
+(
+	id bigserial not null
+		constraint shots_pk
+			primary key,
+	x double precision not null,
+	y double precision not null,
+	r double precision not null,
+	result boolean not null
+);
