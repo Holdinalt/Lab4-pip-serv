@@ -1,0 +1,25 @@
+<div class="block" *ngIf="!loginned">
+
+  <label>Логин
+    <input type="text" pInputText [(ngModel)]="user.login" #loginInput="ngModel" required  >
+  </label>
+
+  <div [hidden]="loginInput.valid || loginInput.untouched" class="alert">
+    Не указано имя
+  </div><br><br>
+
+  <label>Пароль
+    <input type="text" pInputText [(ngModel)]="user.password" #passInput="ngModel" required >
+  </label>
+
+  <div [hidden]="passInput.valid || passInput.untouched" class="alert">
+    Не указано имя
+  </div><br><br>
+
+  <button  type="button" pButton label="Submit" [disabled]="loginInput.invalid && passInput.invalid" (click)="tryToLog(user)"></button><br><br>
+  <button  type="button" pButton label="Register" [disabled]="loginInput.invalid && passInput.invalid" (click)="tryToRegister(user)"></button>
+  <br><span id="regAns"></span>
+
+<div class="block" *ngIf="loginned" style="height: 100px">
+  Добро пожаловать {{user.login}} !
+</div>

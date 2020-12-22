@@ -1,0 +1,19 @@
+.block{
+  word-wrap: normal;
+  text-indent: 5%;
+  padding: 25px;
+  border-radius: 25px;
+  background-color: antiquewhite;
+  float: right;
+  margin: 50px;
+  width: 250px;
+  height: 360px;
+}
+
+.alert{
+  color: red;
+}
+
+label{
+  font-size: 120%;
+}

@@ -1,0 +1,22 @@
+{
+  "/api/authorization/signup": {
+    "target": "http://localhost:6520",
+    "secure": false
+  },
+
+  "/api/authorization/signin": {
+    "target": "http://localhost:6520",
+    "secure": false
+  },
+
+  "/api/shots": {
+    "target": "http://localhost:6520",
+    "secure": false
+  },
+
+  "/api/authorization/logout": {
+    "target": "http://localhost:6520",
+    "secure": false
+  },
+  "proxyConfig": "./proxy.conf.json"
+}

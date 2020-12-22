@@ -1,0 +1,95 @@
+.vars{
+  --background-color: #FFF;
+  --clock-shadow: inset 2px 3px 8px 0 rgba(0, 0, 0, 0.2);
+  --dot-color: #1B1B1B;
+  --seconds-color: red;
+}
+
+body{
+  font-family: Gill Sans, sans-serif;
+  background-color: gray;
+  margin: 100px;
+}
+
+.block{
+  word-wrap: normal;
+  text-indent: 5%;
+  padding: 25px;
+  border-radius: 25px;
+  background-color: antiquewhite;
+  float: right;
+  margin: 50px;
+}
+
+.clock {
+  width: 350px;
+  height: 350px;
+  border: 5px solid white;
+  border-radius: 100%;
+  background: #FFF;
+}
+
+.wrap {
+  position: relative;
+  width: 350px;
+  height: 350px;
+  border-radius: 100%;
+}
+
+.minute,
+.hour {
+  position: absolute;
+  z-index: 1;
+  top: -28.6%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 6px;
+  height: 100px;
+  margin: auto;
+  transform: rotate(0deg);
+  transform-origin: bottom center;
+  background: black;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4);
+}
+
+.minute {
+  position: absolute;
+  top: -38%;
+  left: 0;
+  width: 4px;
+  height: 130px;
+  transform: rotate(90deg);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4);
+}
+
+.second {
+  position: absolute;
+  z-index: 1;
+  top: -26%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  height: 90px;
+  margin: auto;
+  transform: rotate(180deg);
+  transform-origin: bottom center;
+  border-radius: 4px;
+  background: #FF4B3E;
+
+}
+
+.dot {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  margin: auto;
+  border: 2px solid #1B1B1B;
+  border-radius: 100px;
+}

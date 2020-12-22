@@ -1,0 +1,18 @@
+<div class="block">
+
+  <h3>X (-5..3): <span id="xInput">{{shot.x | number:'1.1-5'}}</span></h3>
+  <p-slider [(ngModel)]="shot.x" [step]="0.01" [min]="-5" [max]="3" id="xSlider"></p-slider>
+
+  <h3>Y (-3..5)   </h3>
+  <input type="text" pInputText [(ngModel)]="shot.y" #yInput="ngModel" id="yInput" [ngModel]="shot.y | number:'1.1-5'"
+         required pattern="^0*((-[0-2](\.|,)[0-9]*)|([0-4](\.|,)[0-9]*)|-3(\.|,)0|5(\.|,)0|-[0-3]|[0-5])$">
+
+  <div [hidden]="yInput.valid || yInput.untouched" class="alert alert-danger">
+    Не указано имя
+  </div><br>
+
+  <h3>R (-5..3): <span id="rInput">{{shot.r}}</span></h3>
+  <p-slider [(ngModel)]="shot.r" [step]="0.01" [min]="-5" [max]="3" pattern="[^0]+" (onChange)="resetR()"></p-slider><br>
+
+  <button class="submitButton" type="button" pButton label="Submit" [disabled]="yInput.invalid" (click)="makeShot()"></button>
+</div>
