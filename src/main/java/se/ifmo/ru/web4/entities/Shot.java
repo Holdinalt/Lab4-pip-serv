@@ -4,6 +4,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import se.ifmo.ru.web4.models.Checker;
 
 import javax.persistence.*;
 
@@ -15,7 +18,11 @@ public class Shot {
     @Id
     @SequenceGenerator(sequenceName = "shots_id_seq", name = "shots_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "shots_id_seq")
+
     private long id;
+
+    @Autowired
+    private Checker checker;
 
     private double x;
     private double y;
