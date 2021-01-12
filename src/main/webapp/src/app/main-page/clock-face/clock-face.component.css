@@ -93,3 +93,14 @@ body{
   border: 2px solid #1B1B1B;
   border-radius: 100px;
 }
+
+@media screen and (max-width: 992px) {
+  .block{
+    zoom: 150%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    float: unset;
+  }
+}

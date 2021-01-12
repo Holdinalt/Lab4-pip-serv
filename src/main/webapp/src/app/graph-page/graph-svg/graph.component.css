@@ -1,60 +1,3 @@
-header {
-  text-shadow: black 0 0 2px;
-  color: antiquewhite;
-  font-family: fantasy;
-  font-size: 200%;
-}
-body{
-  font-family: Gill Sans, sans-serif;
-  background-color: gray;
-  margin: 100px;
-}
-span.errorAns{
-  color: red;
-}
-
-span.badAns{
-  color: red;
-}
-
-span.goodAns{
-  color: green;
-}
-
-div.mainForm{
-  text-indent: 5%;
-  padding: 25px;
-  border-radius: 25px;
-  background-color: antiquewhite;
-  width: 600px;
-  height: 200px;
-  float: left;
-  margin: 50px;
-
-}
-
-div.answerTable{
-  overflow: hidden;
-  padding: 30px;
-  border-radius: 25px;
-  background-color: antiquewhite;
-  width: 500px;
-  height: 300px;
-  float: right;
-  margin: 50px;
-}
-
-.formAns{
-  border-spacing: 10px;
-}
-
-.mainAns{
-  border: 3px solid gray;
-  overflow: auto;
-  width: 500px;
-  height: 300px;
-}
-
 .diagram{
   padding: 25px;
   border-radius: 25px;
@@ -93,4 +36,26 @@ polygon.graph-shape{
   background-color: antiquewhite;
   float: right;
   margin: 50px;
+}
+
+@media screen and (max-width: 992px) {
+  .diagram{
+    width: 100%;
+    height: 100%;
+    font-size: 150%;
+    margin: 5px;
+    display: block;
+    align-items: center;
+    justify-content: center;
+    float: unset;
+  }
+
+  .block{
+    display: block;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    float: unset;
+  }
+
 }

@@ -19,3 +19,19 @@
   width: 500px;
   height: 300px;
 }
+
+@media screen and (max-width: 992px) {
+  .answerTable{
+    font-size: 80%;
+    zoom: 230%;
+    display: block;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    float: unset;
+    width: 97%;
+  }
+  .mainAns{
+    width: 100%;
+  }
+}

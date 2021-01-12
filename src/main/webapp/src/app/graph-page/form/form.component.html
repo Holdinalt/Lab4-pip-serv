@@ -14,5 +14,5 @@
   <h3>R (-5..3): <span id="rInput">{{shot.r}}</span></h3>
   <p-slider [(ngModel)]="shot.r" [step]="0.01" [min]="-5" [max]="3" pattern="[^0]+" (onChange)="resetR()"></p-slider><br>
 
-  <button class="submitButton" type="button" pButton label="Submit" [disabled]="yInput.invalid" (click)="makeShot()"></button>
+  <button class="submitButton" id="submitFormButton" type="button" pButton label="Submit" [disabled]="yInput.invalid" (click)="makeShot()"></button>
 </div>

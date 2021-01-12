@@ -1,4 +1,5 @@
-import {AfterViewInit, Component, ElementRef} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit} from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-app',
@@ -31,11 +32,19 @@ import {AfterViewInit, Component, ElementRef} from '@angular/core';
     </html>`,
   styleUrls: ['app.component.css']
 })
-export class AppComponent implements AfterViewInit{
-  constructor(private elementRef: ElementRef){}
+export class AppComponent implements AfterViewInit, OnInit{
+  constructor(private elementRef: ElementRef, private router: Router){}
   name = '';
+
 
   ngAfterViewInit(): void {
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = 'gray';
+  }
+
+  ngOnInit(): void {
+    console.log(sessionStorage.getItem('loginned'));
+    if (sessionStorage.getItem('loginned')) {
+      this.router.navigate(['/graph']);
+    }
   }
 }

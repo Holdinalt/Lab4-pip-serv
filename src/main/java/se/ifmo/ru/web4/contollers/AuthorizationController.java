@@ -37,4 +37,6 @@ public class AuthorizationController {
 
         }else return new ResponseEntity<>("This username is already taken", HttpStatus.UNPROCESSABLE_ENTITY);
     }
+
+
 }

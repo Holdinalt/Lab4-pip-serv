@@ -17,3 +17,15 @@
 label{
   font-size: 120%;
 }
+
+@media screen and (max-width: 992px) {
+  .block{
+    zoom: 230%;
+    display: block;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    float: unset;
+    width: 97%;
+  }
+}
