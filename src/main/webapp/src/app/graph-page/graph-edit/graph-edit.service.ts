@@ -1,42 +1,25 @@
 import {Injectable} from "@angular/core";
-import {Shot} from "../../models/Shot";
-import {ShotResult} from "../../models/ShotResult";
 import * as request from 'superagent';
+import {newPolygon} from "../../models/newPolygon";
 
-export class PairXY{
-
-  constructor(X, Y) {
-    this.X = X;
-    this.Y = Y;
-  }
-
-  X:number;
-  Y:number;
-
-}
-
-export class newPolygon{
-
-  R: number = 1;
-
-  cords: Array<PairXY>;
-}
 
 @Injectable()
 export class GraphEditService{
 
-  makeShot(poly: newPolygon): void{
+  sendEdits(poly: newPolygon): void{
     request
-      .post('http://localhost:6520/api/shots') //TODO
+      .post('http://localhost:6520/api/edit')
       .withCredentials()
       .set('X-Requested-With', 'XMLHttpRequest')
-      .send(JSON.stringify(poly))
+      .send(JSON.stringify({dots: poly.getCordsArray()}))
       .type('json')
       .end((err, res) => {
         if (res.ok) {
+          console.log(res);
+          console.log('Загрузка полигона успешна!');
           this.makePoly(poly);
-        } else if (res.status === 401) {
-          console.log('Проблемы с полигоном после сервера')
+        } else {
+          console.log('Проблемы с полигоном после сервера');
         }
       });
   }
@@ -48,6 +31,14 @@ export class GraphEditService{
       const ypos = value.Y * 100 * -1 + 150;
       cordsStr += xpos + ',' + ypos + ' ';
     })
+
+    let paras = document.getElementsByClassName('editDots');
+    if(paras != null){
+      for(let i = 0; i < paras.length; i++){
+        paras[0].remove();
+        paras[0].remove();
+      }
+    }
 
     document.getElementById('graph-svg').appendChild(this.makePolySvg(cordsStr));
   }
@@ -63,6 +54,15 @@ export class GraphEditService{
   }
 
   clear(){
-
+    request
+      .get('http://localhost:6520/api/edit')
+      .withCredentials()
+      .set('X-Requested-With', 'XMLHttpRequest')
+      .end((err, res) => {
+        console.log(res);
+        if(res.ok){
+          console.log("Очистка на сервере успешна")
+        }
+      });
   }
 }

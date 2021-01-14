@@ -5,8 +5,11 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
+import se.ifmo.ru.web4.models.CheckPart;
 import se.ifmo.ru.web4.models.Checker;
+import se.ifmo.ru.web4.models.CheckerConfig;
 
 import javax.persistence.*;
 
@@ -21,44 +24,19 @@ public class Shot {
 
     private long id;
 
-    @Autowired
-    private Checker checker;
-
     private double x;
     private double y;
     private double r;
     private boolean result;
 
-    public Shot(double x, double y, double r) {
+    public Shot(double x, double y, double r, boolean result) {
+
         this.x = x;
         this.y = y;
         this.r = r;
-        check();
+        this.result = result;
+
     }
 
-    public void check() {
-        double tempR = r;
-        if (r == 0) {
-            tempR = 1;
-        }
-        if (r < 0) {
-            tempR = -r;
-            x = -x;
-            y = -y;
-        }
 
-        if (x >= 0) {
-            if (y > 0) {
-                result = false; // X>=0 Y>0
-            } else if (!(y > 0)) {
-                result = (y >= tempR * -1 && x <= tempR / 2); //X>=0 Y<=0
-            }
-        } else if (!(x >= 0)) {
-            if (y > 0) {
-                result = (x * x + y * y <= (tempR * tempR) / 4); // X<0 Y>0
-            } else if (!(y > 0)) {
-                result =  (y + x >= -1 * tempR / 2); //X<0 Y<=0
-            }
-        }
-    }
 }

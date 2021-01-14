@@ -1,17 +1,52 @@
 package se.ifmo.ru.web4.models;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
-@Scope("session")
-@Service
+
 public class Checker {
+
+    private boolean checkTypeStandard = true;
+
+    public void printCheckTypeStandard(){
+        if(checkTypeStandard){
+            System.out.println("Regular");
+        }else {
+            System.out.println("Smart");
+        }
+    }
+
+    public String getCheckTypeStandardString(){
+        if(checkTypeStandard){
+            return "Regular";
+        }else {
+            return "Smart";
+        }
+    }
+
+    public boolean check(double x, double y, double r){
+        if(checkTypeStandard){
+            System.out.println("Regular");
+        }else {
+            System.out.println("Smart");
+        }
+        boolean result = true;
+        if(checkTypeStandard){
+            result = standardCheck(x, y, r);
+        } else {
+            for (CheckPart part : checkParts){
+                if(!part.check(x, y, r)){
+                    result = false;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
 
     CheckPart[] checkParts;
 
-    public Checker(){ };
+    public Checker(){ }
 
     public CheckPart[] getCheckParts() {
         return checkParts;
@@ -21,18 +56,24 @@ public class Checker {
         this.checkParts = checkParts;
     }
 
-    public void makeCheck(String dots) {
+    public void makeCheckerFromArray(double[][] dots) {
+        checkTypeStandard = false;
+        checkParts = makeCheckParts(dots);
+    }
+
+    public void makeCheckerFromString(String dots) {
+        checkTypeStandard = false;
         checkParts = makeCheckParts(toArray(dots));
     }
 
-    private float[][] toArray(String dots) {
-        float[][] newDotsArray = null;
+    private double[][] toArray(String dots) {
+        double[][] newDotsArray = null;
         try {
             String[] dotsArray = dots.split(",");
-            newDotsArray = new float[dotsArray.length][2];
+            newDotsArray = new double[dotsArray.length][2];
             for (int i = 0; i < dotsArray.length; i++) {
-                newDotsArray[i][0] = Float.parseFloat(dotsArray[i].split(":")[0]);
-                newDotsArray[i][1] = Float.parseFloat(dotsArray[i].split(":")[1]);
+                newDotsArray[i][0] = Double.parseDouble(dotsArray[i].split(":")[0]);
+                newDotsArray[i][1] = Double.parseDouble(dotsArray[i].split(":")[1]);
             }
         } catch (Exception e) {
             System.out.println("Проблема с обработкой значений " + dots);
@@ -40,7 +81,7 @@ public class Checker {
         return newDotsArray;
     }
 
-    private CheckPart[] makeCheckParts(float[][] points) {
+    private CheckPart[] makeCheckParts(double[][] points) {
         CheckPart[] checkParts = new CheckPart[points.length];
         for (int i = 0; i < points.length; i++) {
             checkParts[i] = makeCheckPart(
@@ -52,10 +93,10 @@ public class Checker {
         return checkParts;
     }
 
-    private CheckPart makeCheckPart(float x1, float y1, float x2, float y2, float x3, float y3) {
+    private CheckPart makeCheckPart(double x1, double y1, double x2, double y2, double x3, double y3) {
         CheckPart checkPart = new CheckPart();
-        float k = (y2 - y1) / (x2 - x1);
-        float b = y1 - k * x1;
+        double k = (y2 - y1) / (x2 - x1);
+        double b = y1 - k * x1;
         if (y3 < k * x3 + b) {
             checkPart.addCheckPart(k, b, false);
             return checkPart;
@@ -65,7 +106,7 @@ public class Checker {
         }
     }
 
-    public boolean standartCheck(float x, float y, float r) {
+    public boolean standardCheck(double x, double y, double r) {
         boolean result = false;
         double tempR = r;
         if (r == 0) {
@@ -92,5 +133,10 @@ public class Checker {
         }
 
         return result;
+    }
+
+    public void clear(){
+        this.checkTypeStandard = true;
+        this.checkParts = new CheckPart[0];
     }
 }

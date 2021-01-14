@@ -1,35 +1,43 @@
-<div class="areaEditTable">
-  <div class="mainEdit">
-    <table class="editTable" id="editTable">
-      <thead>
-      <tr>
-        <th colspan="2">
-          <button id="startEditButton" type="button" pButton label="StartEdit"  (click)="startEdit()"></button>
+<div class="editTemplate">
 
-          <h3>X (-5..3): <span id="xInput">{{shot.x | number:'1.1-5'}}</span></h3>
-          <p-slider [(ngModel)]="shot.x" [step]="0.01" [min]="-5" [max]="3" id="xSlider"></p-slider>
 
-          <h3>Y (-3..5)   </h3>
-          <input type="text" pInputText [(ngModel)]="shot.y" #yInput="ngModel" id="yInput" [ngModel]="shot.y | number:'1.1-5'"
-                 required pattern="^0*((-[0-2](\.|,)[0-9]*)|([0-4](\.|,)[0-9]*)|-3(\.|,)0|5(\.|,)0|-[0-3]|[0-5])$">
+  <div class="block">
+    <button id="startEditButton" type="button" pButton label="Start Edit" (click)="startEdit()"></button>
 
-          <div [hidden]="yInput.valid || yInput.untouched" class="alert alert-danger">
-            Не указано имя
-          </div><br>
+    <h3>X (-5..3): <span id="xInput">{{shot.x | number:'1.1-5'}}</span></h3>
+    <p-slider [(ngModel)]="shot.x" [step]="0.01" [min]="-5" [max]="3" id="xSlider"></p-slider>
 
-          <button id="addPointButton" type="button" pButton label="Add Point" [disabled]="yInput.invalid" (click)="addPoint()"></button>
+    <h3>Y (-3..5) </h3>
+    <input type="text" pInputText [(ngModel)]="shot.y" #yInput="ngModel" id="yInput" [ngModel]="shot.y | number:'1.1-5'"
+           required pattern="^0*((-[0-2](\.|,)[0-9]*)|([0-4](\.|,)[0-9]*)|-3(\.|,)0|5(\.|,)0|-[0-3]|[0-5])$">
 
-          <button id="clearEditButton" type="button" pButton label="Submit" (click)="clear()"></button>
+    <div [hidden]="yInput.valid || yInput.untouched" class="alert alert-danger">
+      Не указано имя
+    </div>
+    <br>
 
-          <h3>R (-5..3): <span id="rInput">{{shot.r}}</span></h3>
-          <p-slider  [step]="0.01" [min]="-5" [max]="3" ></p-slider><br>
-        </th>
-      </tr>
-      <tr>
-        <th>X value</th>
-        <th>Y value</th>
-      </tr>
-      </thead>
-    </table>
+    <button id="addPointButton" type="button" pButton label="Add Point" [disabled]="yInput.invalid"
+            (click)="addPoint()"></button>
+    <span>&nbsp;&nbsp;&nbsp;&nbsp;</span> <!-- пробелы между кнопками -->
+
+    <button id="clearEditButton" type="button" pButton label="Clear" (click)="clear()"></button>
+    <br><br>
+
+    <button id="submitEditButton" type="button" pButton label="Submit" (click)="sendEdits()"></button>
+
   </div>
+
+  <div class="editWrap">
+    <h4>Точки для редактирования</h4>
+    <div class="mainEdit">
+      <table class="editTable" id="editTable">
+        <tr>
+          <th>X value</th>
+          <th>Y value</th>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+
 </div>

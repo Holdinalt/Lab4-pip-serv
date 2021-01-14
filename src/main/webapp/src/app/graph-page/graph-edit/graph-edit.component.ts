@@ -1,26 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Shot} from "../../models/Shot";
-import {ShotResult} from "../../models/ShotResult";
 import {GraphEditService} from "./graph-edit.service";
+import {PairXY} from "../../models/PairXY";
+import {newPolygon} from "../../models/newPolygon";
 
-export class PairXY{
 
-  constructor(X, Y) {
-    this.X = X;
-    this.Y = Y;
-  }
 
-  X:number;
-  Y:number;
-
-}
-
-export class newPolygon{
-
-  R: number = 1;
-
-  cords: Array<PairXY> = [];
-}
 
 @Component({
   selector: 'graph-edit',
@@ -40,6 +25,12 @@ export class GraphEditComponent implements OnInit{
 
   nowMode = 'Work';
 
+  sendEdits(){
+    console.log(this.myNewPolygon.getCords());
+    this.graphEditService.sendEdits(this.myNewPolygon);
+    this.switchMode();
+  }
+
   switchMode(){
     if(this.nowMode == 'Work'){
       this.Mode.emit('Edit');
@@ -55,15 +46,17 @@ export class GraphEditComponent implements OnInit{
   private myNewPolygon = new newPolygon();
 
   addPoint(){
-    this.myNewPolygon.cords.push(new PairXY(this.shot.x, this.shot.y))
+    this.myNewPolygon.cords.push(new PairXY(this.getXFromShot(), this.getYFromShot()));
+    this.addPointToTable();
   }
 
   addPointToTable(){
+    console.log('Adding point to table')
     const tempTr = document.createElement('tr');
-    tempTr.innerHTML = this.makeTable(this.shot.x, this.shot.y);
+    tempTr.setAttribute('class', 'editPoint')
+    tempTr.innerHTML = this.makeTable(this.getXFromShot(), this.getYFromShot());
     document.getElementById('editTable').append(tempTr);
-    this.createCircleFromValue(this.shot.x, this.shot.y);
-    this.myNewPolygon.cords.push(new PairXY(this.shot.x, this.shot.y));
+    this.createCircleFromValue(this.getXFromShot(), this.getYFromShot());
   }
 
   makeTable(x: number, y: number): string{
@@ -80,6 +73,7 @@ export class GraphEditComponent implements OnInit{
     const ypos = y * 100 * -1 + 150;
     let col = 'blue';
     document.getElementById('editPoints').appendChild(this.makeSVGEl('circle', {
+      class: 'editDots',
       cx: String(xpos),
       cy: String(ypos),
       fill: String(col),
@@ -96,21 +90,46 @@ export class GraphEditComponent implements OnInit{
   }
 
   clear(){
+    console.log('Clearing')
+
+    this.myNewPolygon = new newPolygon();
+
+    this.switchMode();
+    var paras = document.getElementsByClassName('graph-shape'); //чистим свг от предыдущих плоскостей
+    for(let i = 0; i < paras.length; i++){
+      paras[i].setAttribute('opacity', '50%')
+    }
+    if(document.getElementById('newPolygon') != null){
+      document.getElementById('newPolygon').remove();
+    }
+
+    paras = document.getElementsByClassName('editDots');
+    if(paras != null){
+      for(let i = 0; i < paras.length; i++){
+        paras[0].remove();
+      }
+    }
+
+    this.clearTable();
+    this.graphEditService.clear();
     if(this.nowMode == 'Edit'){
       this.switchMode();
-      document.getElementById('newPolygon').remove();
-      var paras = document.getElementsByClassName('graph-shape'); //возвращаем классические плоскости
-      for(let i = 0; i < paras.length; i++){
-        paras[i].setAttribute('opacity', '50%')
-      }
     }
   }
 
   clearTable(){
-
+    var paras = document.getElementsByClassName('editPoint');
+    if(paras != null){
+      for(let i = 0; i < paras.length; i++){
+        paras[0].remove();
+        paras[0].remove(); //хз почему 2 раза, но чистит
+      }
+    }
   }
 
+
   startEdit(){
+    console.log('Edit started')
     var paras = document.getElementsByClassName('graph-shape'); //чистим свг от предыдущих плоскостей
     for(let i = 0; i < paras.length; i++){
       paras[i].setAttribute('opacity', '0%')
@@ -118,5 +137,22 @@ export class GraphEditComponent implements OnInit{
     this.switchMode();
   }
 
+  getXFromShot(){
+    if(this.shot.r > 0){
+      return this.shot.x / Math.abs(this.shot.r);
+    }else {
+      return -1 * this.shot.x / Math.abs(this.shot.r);
+    }
+
+  }
+
+  getYFromShot(){
+    if(this.shot.r > 0){
+      return this.shot.y / Math.abs(this.shot.r);
+    } else {
+      return -1 * this.shot.y / Math.abs(this.shot.r);
+    }
+
+  }
 
 }

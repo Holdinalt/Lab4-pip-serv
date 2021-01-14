@@ -85,7 +85,6 @@ export class GraphComponent implements OnInit{
     y = y/(this.lenY/300);
     x = x/(this.lenX/300);
     //console.log(x);
-    console.log(x);
     this.drawCircle(x, y);
     if (x < 0) { x = 0; }
     if (y < 0) { y = 0; }

@@ -12,10 +12,6 @@
   border: 3px solid gray;
 }
 
-.graph-shape{
-  opacity: 50%;
-}
-
 rect.graph-shape{
   fill: greenyellow;
 }

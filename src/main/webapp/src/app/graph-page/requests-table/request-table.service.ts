@@ -3,6 +3,7 @@ import * as request from 'superagent';
 import {Router} from '@angular/router';
 import {ShotResult} from '../../models/ShotResult';
 import * as $ from 'jquery';
+import {templateJitUrl} from "@angular/compiler";
 
 @Injectable()
 export class RequestTableService{
@@ -53,14 +54,15 @@ export class RequestTableService{
   }
 
   createCircleFromValue(x: number, y: number, nr: number , result: boolean): void{
+
     if (nr < 0){
       x = -x;
       y = -y;
-      nr = -nr;
     }
+
     const xpos = x * 100 / Math.abs(this.getR()) + 150;
     const ypos = (y * 100 / Math.abs(this.getR()) * -1) + 150;
-    let col = 'red';
+    let col;
     if (result){
       col = 'green';
     }else {

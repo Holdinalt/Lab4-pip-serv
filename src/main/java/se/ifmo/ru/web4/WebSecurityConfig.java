@@ -32,6 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 .antMatchers("/authorization/signup").not().fullyAuthenticated()
                 .antMatchers("/authorization/signin").permitAll()
                 .antMatchers("/shots").authenticated()
+                .antMatchers("/edit").authenticated()
                 .and().httpBasic()           /* http basic метод авторизации */
                 .and()
                 .logout()
